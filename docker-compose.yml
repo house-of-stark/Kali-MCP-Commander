@@ -1,0 +1,37 @@
+version: '3.8'
+
+services:
+  kali-mcp-commander:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: kali-mcp-commander
+    restart: unless-stopped
+    ports:
+      - "8081:8080"
+    volumes:
+      - ./config:/app/config
+    environment:
+      - NODE_ENV=production
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
+
+  desktop-commander:
+    image: node:18-alpine
+    container_name: desktop-commander-mcp
+    command: npx @wonderwhy-er/desktop-commander@latest
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    depends_on:
+      kali-mcp-commander:
+        condition: service_started
+    environment:
+      - MCP_SERVER_URL=http://kali-mcp-commander:8080
+
+networks:
+  default:
+    driver: bridge

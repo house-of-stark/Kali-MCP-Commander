@@ -1,13 +1,19 @@
-# Minimal Kali Linux container with just the essentials for MCP server
 FROM kalilinux/kali-rolling
 
-# Install only the minimal required packages
+# Install Node.js and npm
 RUN apt-get update && \
     DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
     curl \
     ca-certificates \
     nodejs \
     npm \
+    && rm -rf /var/lib/apt/lists/*
+
+# Install all Kali Linux tools (this will be very large)
+RUN apt-get update && \
+    DEBIAN_FRONTEND=noninteractive apt-get install -y \
+    kali-linux-everything \
+    && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
 # Install desktop-commander globally

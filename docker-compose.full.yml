@@ -1,0 +1,27 @@
+version: '3.8'
+
+services:
+  kali-mcp-commander:
+    build:
+      context: .
+      dockerfile: Dockerfile.full
+    container_name: kali-mcp-commander
+    restart: unless-stopped
+    ports:
+      - "8081:8080"
+    volumes:
+      - ./config:/app/config
+    environment:
+      - NODE_ENV=production
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
+    # Add more resources if needed for full Kali tools
+    # deploy:
+    #   resources:
+    #     limits:
+    #       cpus: '2'
+    #       memory: 4G
