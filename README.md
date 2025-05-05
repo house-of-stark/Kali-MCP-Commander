@@ -24,7 +24,7 @@ A clean, minimal implementation of Kali Linux MCP (Model Context Protocol) integ
 
 1. **Clone the repository**:
    ```bash
-   git clone https://github.com/house-of-stark/Claude-Kali-MCP-Commander.git
+   git clone https://github.com/your-username/Claude-Kali-MCP-Commander.git
    cd Claude-Kali-MCP-Commander
    ```
 
@@ -53,7 +53,7 @@ A clean, minimal implementation of Kali Linux MCP (Model Context Protocol) integ
 4. **Configure Claude Desktop**:
    - Open Claude Desktop settings
    - Set MCP Server URL to: `http://localhost:8081`
-   - Set Project Path to: `/Users/cstark/Claude-Kali-MCP-Commander`
+   - Set Project Path to the full path of this repository (e.g., `/path/to/Claude-Kali-MCP-Commander`)
    - Restart Claude Desktop
 
 ## Project Structure
@@ -96,6 +96,50 @@ After starting the services, you can test the MCP integration:
    Check for any error messages or warnings
 
 ## Configuration
+
+### Claude Desktop Configuration
+
+To use this MCP server with Claude Desktop, you'll need to configure the following in your Claude Desktop settings:
+
+1. **MCP Server URL**: `http://localhost:8081`
+2. **Project Path**: The full path to this repository on your system
+
+This configuration includes two MCP server options:
+
+1. **Kali Linux MCP (Required)**: Runs commands inside the Docker container with Kali Linux tools
+2. **Host OS Commander (Optional)**: Can be used to run commands directly on the host OS where Claude Desktop is installed. You can remove this section if you only need the Kali Linux environment.
+
+Example `claude_desktop_config.json`:
+
+```json
+{
+  "mcpServerUrl": "http://localhost:8081",
+  "projectPath": "/path/to/Claude-Kali-MCP-Commander",
+  "mcpServers": {
+    "kali-mcp": {
+      "command": "docker",
+      "args": [
+        "exec",
+        "-i",
+        "kali-mcp-commander",
+        "npx",
+        "@wonderwhy-er/desktop-commander"
+      ],
+      "name": "Kali Linux MCP",
+      "description": "Access Kali Linux security tools via MCP"
+    },
+    "desktop-commander": {
+      "command": "npx",
+      "args": [
+        "@wonderwhy-er/desktop-commander@latest"
+      ],
+      "name": "Host OS Commander",
+      "description": "Access commands on the host OS where Claude Desktop is installed"
+    }
+  },
+  "defaultMcpServerId": "kali-mcp"
+}
+```
 
 ### Environment Variables
 
@@ -173,9 +217,8 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## Credits
 
-- Original work by Eduard Ruzga (2024)
-- Modified and maintained by Chris Stark (2025)
+- Original work by [Eduard Ruzga](https://github.com/wonderwhy-er) (2024)
 
 ## Support
 
-For support, please [open an issue](https://github.com/house-of-stark/Claude-Kali-MCP-Commander/issues) on GitHub.
+For support, please [open an issue](https://github.com/your-username/Claude-Kali-MCP-Commander/issues) on GitHub.
