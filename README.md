@@ -32,7 +32,7 @@ By default, the provided `docker-compose.yml` and `docker-compose.full.yml` file
 
 1. **Clone the repository**:
    ```bash
-   git clone https://github.com/your-username/Claude-Kali-MCP-Commander.git
+   git clone https://github.com/house-of-stark/Claude-Kali-MCP-Commander
    cd Claude-Kali-MCP-Commander
    ```
 
