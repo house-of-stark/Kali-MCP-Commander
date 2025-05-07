@@ -12,7 +12,7 @@ RUN apt-get update && \
 # Install all Kali Linux tools (this will be very large)
 RUN apt-get update && \
     DEBIAN_FRONTEND=noninteractive apt-get install -y \
-    kali-linux-everything \
+    kali-linux-full \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 

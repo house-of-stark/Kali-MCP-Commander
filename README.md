@@ -20,6 +20,14 @@ A clean, minimal implementation of Kali Linux MCP (Model Context Protocol) integ
 - [Git](https://git-scm.com/downloads) (for cloning the repository)
 - [Node.js](https://nodejs.org/) (v16+ for development and testing)
 
+## Networking Note
+
+By default, the provided `docker-compose.yml` and `docker-compose.full.yml` files use **host networking** (`network_mode: host`). This gives the containers full access to the host network, which is required for some advanced networking tools and scenarios.
+
+**Security Note:**
+- Host networking provides less isolation between your host and the containers. All network interfaces and ports are shared.
+- If you prefer more isolation, you can switch to Docker's default `bridge` network by removing the `network_mode: host` lines and adding a `ports:` mapping (e.g., `8081:8080`) to the relevant service(s). See the commented examples in the compose files and documentation below for details.
+
 ## Quick Start
 
 1. **Clone the repository**:
@@ -85,7 +93,7 @@ After starting the services, you can test the MCP integration:
 
 2. **Verify Container Status**:
    ```bash
-   docker ps --filter "name=kali-mcp-commander"
+   docker ps --filter "name=kali-mcp-commander-minimal"
    ```
    Should show the container as "healthy"
 
@@ -121,7 +129,7 @@ Example `claude_desktop_config.json`:
       "args": [
         "exec",
         "-i",
-        "kali-mcp-commander",
+        "kali-mcp-commander-minimal",
         "npx",
         "@wonderwhy-er/desktop-commander"
       ],
@@ -168,7 +176,7 @@ ports:
 
 2. **Container Health Check Fails**
    - **Symptom**: Container restarts continuously
-   - **Solution**: Check logs with `docker logs kali-mcp-commander`
+   - **Solution**: Check logs with `docker logs kali-mcp-commander-minimal`
 
 3. **MCP Server Not Responding**
    - **Symptom**: Claude Desktop can't connect to the MCP server

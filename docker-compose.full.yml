@@ -5,7 +5,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile.full
-    container_name: kali-mcp-commander
+    container_name: kali-mcp-commander-full
     restart: unless-stopped
     network_mode: host
     volumes:
@@ -24,3 +24,17 @@ services:
     #     limits:
     #       cpus: '2'
     #       memory: 4G
+
+  desktop-commander:
+    image: node:18-alpine
+    container_name: desktop-commander-mcp-full
+    command: npx @wonderwhy-er/desktop-commander@latest
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    depends_on:
+      kali-mcp-commander:
+        condition: service_started
+    environment:
+      - MCP_SERVER_URL=http://localhost:8080
+    network_mode: host
+

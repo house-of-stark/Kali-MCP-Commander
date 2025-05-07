@@ -5,11 +5,11 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    container_name: kali-mcp-commander
+    container_name: kali-mcp-commander-minimal
     restart: unless-stopped
-    network_mode: host
     volumes:
       - ./config:/app/config
+    network_mode: host
     environment:
       - NODE_ENV=production
     healthcheck:
@@ -21,7 +21,7 @@ services:
 
   desktop-commander:
     image: node:18-alpine
-    container_name: desktop-commander-mcp
+    container_name: desktop-commander-mcp-minimal
     command: npx @wonderwhy-er/desktop-commander@latest
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
@@ -31,4 +31,5 @@ services:
     environment:
       - MCP_SERVER_URL=http://localhost:8080
     network_mode: host
+
 
