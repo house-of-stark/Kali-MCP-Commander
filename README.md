@@ -32,13 +32,8 @@ By default, the provided `docker-compose.yml` and `docker-compose.full.yml` file
 
 1. **Clone the repository**:
    ```bash
-<<<<<<< HEAD
-   git clone https://github.com/house-of-stark/public.git
-   cd public/Claude-Kali-MCP-Commander
-=======
    git clone https://github.com/house-of-stark/Claude-Kali-MCP-Commander
    cd Claude-Kali-MCP-Commander
->>>>>>> 3bb5d9d98865c53cc741623ce73a72ee927ab4c4
    ```
 
 2. **Choose your build profile**:
