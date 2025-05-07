@@ -1,0 +1,16 @@
+{
+  "name": "claude-kali-mcp",
+  "version": "1.0.0",
+  "description": "Kali Linux MCP integration for Claude Desktop",
+  "main": "index.js",
+  "scripts": {
+    "start": "npx @wonderwhy-er/desktop-commander --port 8080",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "@wonderwhy-er/desktop-commander": "latest"
+  },
+  "keywords": ["claude", "mcp", "kali", "docker"],
+  "author": "",
+  "license": "MIT"
+}
