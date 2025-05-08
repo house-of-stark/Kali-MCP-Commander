@@ -6,7 +6,6 @@
     "mkfs",
     "fdisk",
     "dd",
-    "sudo",
     "su",
     "passwd",
     "adduser",

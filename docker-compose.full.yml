@@ -7,17 +7,19 @@ services:
       dockerfile: Dockerfile.full
     container_name: kali-mcp-commander-full
     restart: unless-stopped
-    network_mode: host
+
     volumes:
       - ./config:/app/config
     environment:
       - NODE_ENV=production
+      - DEBUG=*
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:8080/health"]
       interval: 30s
       timeout: 10s
       retries: 3
       start_period: 30s
+    network_mode: host
     # Add more resources if needed for full Kali tools
     # deploy:
     #   resources:
@@ -37,4 +39,5 @@ services:
     environment:
       - MCP_SERVER_URL=http://localhost:8080
     network_mode: host
+
 
