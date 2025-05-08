@@ -40,6 +40,8 @@ By default, the provided `docker-compose.yml` and `docker-compose.full.yml` file
 
 ## 🛠️ Build & Run Instructions
 
+**Note:** `sudo` is enabled inside the Kali container for tools like `nmap` and others that require elevated privileges. If you want to restrict the use of `sudo`, edit the `blockedCommands` list in `config.json`.
+
 ### Windows (PowerShell)
 
 **Note:** If you see a script signing or execution policy error, run the script with ExecutionPolicy Bypass:
