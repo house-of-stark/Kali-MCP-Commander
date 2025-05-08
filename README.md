@@ -170,10 +170,6 @@ After starting the services, you can test the MCP integration:
 
 To use this MCP server with Claude Desktop, you'll need to configure the following in your Claude Desktop settings:
 
-1. **MCP Server URL**: `http://localhost:8081`
-2. **Project Path**: The full path to this repository on your system
-
-This configuration includes two MCP server options:
 
 1. **Kali Linux MCP (Required)**: Runs commands inside the Docker container with Kali Linux tools
 2. **Host OS Commander (Optional)**: Can be used to run commands directly on the host OS where Claude Desktop is installed. You can remove this section if you only need the Kali Linux environment.
