@@ -146,7 +146,7 @@ By default, the provided `docker-compose.yml` and `docker-compose.full.yml` file
 
 After starting the services, you can test the MCP integration:
 
-1. **Basic Health Check**:
+1. **Basic Health Check**: (If using bridging to Docker)
    ```bash
    curl http://localhost:8081/health
    ```
