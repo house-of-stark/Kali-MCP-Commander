@@ -36,6 +36,67 @@ By default, the provided `docker-compose.yml` and `docker-compose.full.yml` file
    cd Claude-Kali-MCP-Commander
    ```
 
+---
+
+## 🛠️ Build & Run Instructions
+
+### Windows (PowerShell)
+
+**Note:** If you see a script signing or execution policy error, run the script with ExecutionPolicy Bypass:
+
+1. **Minimal build (recommended):**
+   ```powershell
+   powershell -ExecutionPolicy Bypass -File .\build.ps1
+   docker-compose up -d
+   ```
+
+2. **Full Kali tools build:**
+   ```powershell
+   powershell -ExecutionPolicy Bypass -File .\build.ps1 -Profile full
+   docker-compose -f docker-compose.full.yml up -d
+   ```
+
+### Linux / macOS (Bash)
+
+1. **Minimal build (recommended):**
+   ```bash
+   ./build.sh minimal
+   docker-compose up -d
+   ```
+
+2. **Full Kali tools build:**
+   ```bash
+   ./build.sh full
+   docker-compose -f docker-compose.full.yml up -d
+   ```
+
+### Start & Monitor Services
+
+- **Quick start script (Linux/macOS):**
+  ```bash
+  chmod +x start.sh
+  ./start.sh
+  ```
+  This builds and starts the containers, waits for readiness, and shows status.
+
+- **Check health endpoint:**
+  ```bash
+  curl http://localhost:8080/health
+  ```
+  Should return: `{"status":"ok"}`
+
+- **View running containers:**
+  ```bash
+  docker ps --filter "name=kali-mcp-commander"
+  ```
+
+### Configure Claude Desktop
+
+- Set MCP Server URL to: `http://localhost:8080`
+- (Optional) Set Project Path to your local repo directory
+
+---
+
 2. **Choose your build profile**:
 
    - **Minimal (Default)**: Small image with just the MCP server (recommended for most users)
@@ -223,10 +284,12 @@ When contributing, please:
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
+Copyright (c) 2025 Chris Stark. Maintained by Chris Stark.
+
 ## Credits
 
 - Original work by [Eduard Ruzga](https://github.com/wonderwhy-er) (2024)
 
 ## Support
 
-For support, please [open an issue](https://github.com/your-username/Claude-Kali-MCP-Commander/issues) on GitHub.
+For support, please [open an issue](https://github.com/house-of-stark/Claude-Kali-MCP-Commander/issues) on GitHub.
