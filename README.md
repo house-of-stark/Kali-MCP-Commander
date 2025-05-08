@@ -178,12 +178,32 @@ This configuration includes two MCP server options:
 1. **Kali Linux MCP (Required)**: Runs commands inside the Docker container with Kali Linux tools
 2. **Host OS Commander (Optional)**: Can be used to run commands directly on the host OS where Claude Desktop is installed. You can remove this section if you only need the Kali Linux environment.
 
-Example `claude_desktop_config.json`:
+Example single MCP Server `claude_desktop_config.json`:
 
 ```json
 {
-  "mcpServerUrl": "http://localhost:8081",
-  "projectPath": "/path/to/Claude-Kali-MCP-Commander",
+  "mcpServers": {
+    "kali-mcp": {
+      "command": "docker",
+      "args": [
+        "exec",
+        "-i",
+        "kali-mcp-commander-minimal",
+        "npx",
+        "@wonderwhy-er/desktop-commander"
+      ],
+      "name": "Kali Linux MCP",
+      "description": "Access Kali Linux security tools via MCP"
+    }
+  },
+  "defaultMcpServerId": "kali-mcp"
+}
+```
+
+Example MCP Commander Desktop OS and Kali MCP Server `claude_desktop_config.json`:
+
+```json
+{
   "mcpServers": {
     "kali-mcp": {
       "command": "docker",
@@ -218,7 +238,7 @@ You can customize the following environment variables in the `docker-compose.yml
 - `NODE_ENV`: Environment mode (development/production)
 - `LOG_LEVEL`: Logging verbosity (debug, info, warn, error)
 
-### Port Configuration
+### Port Configuration (if not using host networking)
 
 To change the default ports, modify the `ports` section in `docker-compose.yml`:
 

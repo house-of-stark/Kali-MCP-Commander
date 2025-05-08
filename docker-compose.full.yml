@@ -21,11 +21,11 @@ services:
       start_period: 30s
     network_mode: host
     # Add more resources if needed for full Kali tools
-    # deploy:
-    #   resources:
-    #     limits:
-    #       cpus: '2'
-    #       memory: 4G
+    deploy:
+      resources:
+        limits:
+          cpus: '2'
+          memory: 4G
 
   desktop-commander:
     image: node:18-alpine
