@@ -1,14 +1,14 @@
-# Contributing to Claude Kali MCP Integration
+# Contributing to Kali-MCP-Commander
 
-Thank you for considering contributing to the Claude Kali MCP Integration project! We welcome all contributions that help improve this project.
+Thank you for considering contributing to the Kali-MCP-Commander project! We welcome all contributions that help improve this MCP integration for Kali Linux tools.
 
 ## Getting Started
 
 1. Fork the repository on GitHub
 2. Clone your fork locally
    ```bash
-   git clone https://github.com/your-username/claude-kali-mcp.git
-   cd claude-kali-mcp
+   git clone https://github.com/your-username/Kali-MCP-Commander.git
+   cd Kali-MCP-Commander
    ```
 3. Create a new branch for your changes
    ```bash

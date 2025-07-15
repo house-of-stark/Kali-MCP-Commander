@@ -1,17 +1,25 @@
-# Claude Kali MCP Integration
+# Kali-MCP-Commander
 
-A clean, minimal implementation of Kali Linux MCP (Model Context Protocol) integration for Claude Desktop, providing secure access to Kali Linux tools through Claude's interface. This project enables seamless execution of security tools and commands within an isolated Docker container.
+A powerful implementation of Kali Linux MCP (Model Context Protocol) integration, providing secure access to Kali Linux tools through an MCP interface. This project enables seamless execution of security tools and commands within an isolated Docker container.
 
 ## Features
 
 - 🐳 **Docker-based** - Containerized environment for consistent execution
 - 🔒 **Isolated Environment** - Kali Linux tools in a secure sandbox
 - 🔄 **Automatic Health Checks** - Ensures service reliability and availability
-- 📡 **MCP Server** - Standard protocol integration with Claude Desktop
+- 📡 **MCP Server** - Standard protocol integration with MCP-compatible clients
 - 🚀 **Quick Setup** - Get started with minimal configuration
 - 🔧 **Configurable** - Customizable ports and settings
 - 🔍 **Security-First** - Isolated execution environment for security tools
 - 📊 **Monitoring** - Built-in health checks and status endpoints
+
+## MCP Client Compatibility
+
+Kali-MCP-Commander is designed to work with any MCP (Model Context Protocol) server client, including:
+
+- **Claude Desktop** - Full compatibility with Claude's MCP integration (v2.0+)
+- **Other MCP Clients** - Works with any client that implements the MCP protocol
+- **Standard Compliance** - Implements the latest MCP specification for broad compatibility
 
 ## Prerequisites
 
@@ -32,8 +40,8 @@ By default, the provided `docker-compose.yml` and `docker-compose.full.yml` file
 
 1. **Clone the repository**:
    ```bash
-   git clone https://github.com/house-of-stark/Claude-Kali-MCP-Commander
-   cd Claude-Kali-MCP-Commander
+   git clone https://github.com/house-of-stark/Kali-MCP-Commander
+   cd Kali-MCP-Commander
    ```
 
 ---
@@ -92,7 +100,7 @@ By default, the provided `docker-compose.yml` and `docker-compose.full.yml` file
   docker ps --filter "name=kali-mcp-commander"
   ```
 
-### Configure Claude Desktop
+### Configure MCP Client
 
 - Set MCP Server URL to: `http://localhost:8080`
 - (Optional) Set Project Path to your local repo directory
@@ -121,11 +129,11 @@ By default, the provided `docker-compose.yml` and `docker-compose.full.yml` file
    ```
    Should return: `{"status":"ok"}`
 
-4. **Configure Claude Desktop**:
-   - Open Claude Desktop settings
-   - Set MCP Server URL to: `http://localhost:8081`
-   - Set Project Path to the full path of this repository (e.g., `/path/to/Claude-Kali-MCP-Commander`)
-   - Restart Claude Desktop
+4. **Configure Your MCP Client**:
+   - Open your MCP client (e.g., Claude Desktop) settings
+   - Go to the MCP Servers section
+   - Set Project Path to the full path of this repository (e.g., `/path/to/Kali-MCP-Commander`)
+   - Restart your MCP client
 
 ## Project Structure
 
@@ -137,7 +145,7 @@ By default, the provided `docker-compose.yml` and `docker-compose.full.yml` file
 ├── LICENSE              # MIT License
 ├── README.md            # This file
 ├── config/              # Configuration files
-│   └── claude_desktop_config.json  # Claude Desktop configuration
+│   └── mcp_client_config.json  # MCP client configuration
 ├── docker-compose.yml   # Service definitions and orchestration
 ├── health-server.js     # Health check server implementation
 ├── package.json         # Node.js dependencies
@@ -168,13 +176,13 @@ After starting the services, you can test the MCP integration:
 
 ## Configuration
 
-### Claude Desktop Configuration
+### MCP Client Configuration
 
-To use this MCP server with Claude Desktop, you'll need to configure the following in your Claude Desktop settings:
+To use this MCP server with an MCP-compatible client (like Claude Desktop), you'll need to configure the following in your client settings:
 
 
 1. **Kali Linux MCP (Required)**: Runs commands inside the Docker container with Kali Linux tools
-2. **Host OS Commander (Optional)**: Can be used to run commands directly on the host OS where Claude Desktop is installed. You can remove this section if you only need the Kali Linux environment.
+2. **Host OS Commander (Optional)**: Can be used to run commands directly on the host OS where your MCP client is installed. You can remove this section if you only need the Kali Linux environment.
 
 Example single MCP Server `claude_desktop_config.json`:
 
@@ -221,7 +229,7 @@ Example MCP Commander Desktop OS and Kali MCP Server `claude_desktop_config.json
         "@wonderwhy-er/desktop-commander@latest"
       ],
       "name": "Host OS Commander",
-      "description": "Access commands on the host OS where Claude Desktop is installed"
+      "description": "Access commands on the host OS where your MCP client is installed"
     }
   },
   "defaultMcpServerId": "kali-mcp"
@@ -258,7 +266,7 @@ ports:
    - **Solution**: Check logs with `docker logs kali-mcp-commander-minimal`
 
 3. **MCP Server Not Responding**
-   - **Symptom**: Claude Desktop can't connect to the MCP server
+   - **Symptom**: MCP client can't connect to the server
    - **Solution**:
      - Verify the server is running: `curl http://localhost:8081/health`
      - Check Docker network settings
@@ -310,4 +318,4 @@ Copyright (c) 2025 Chris Stark. Maintained by Chris Stark.
 
 ## Support
 
-For support, please [open an issue](https://github.com/house-of-stark/Claude-Kali-MCP-Commander/issues) on GitHub.
+For support, please [open an issue](https://github.com/house-of-stark/Kali-MCP-Commander/issues) on GitHub.

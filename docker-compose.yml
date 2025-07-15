@@ -5,7 +5,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    container_name: kali-mcp-commander-minimal
+    container_name: kali-mcp-commander
     restart: unless-stopped
     volumes:
       - ./config:/app/config

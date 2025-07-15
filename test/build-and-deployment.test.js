@@ -1,10 +1,18 @@
 import { test, expect, beforeAll } from '@jest/globals';
 import { execSync } from 'child_process';
-import { existsSync } from 'fs';
+import { existsSync, statSync } from 'fs';
 import { join } from 'path';
+import { fileURLToPath } from 'url';
+import { dirname } from 'path';
 
+// Get the current file and directory names in ESM
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+
+// Constants for Docker image and container names
 const DOCKER_IMAGE_NAME = 'kali-mcp-commander';
 const CONTAINER_NAME = 'kali-mcp-commander-test';
+const DOCKER_COMPOSE_FILE = 'docker-compose.yml';
 let isDockerRunning = false;
 
 // Helper function to run shell commands with better error handling
@@ -80,8 +88,10 @@ testIfDocker('1. Verify build script exists and is executable', () => {
   expect(existsSync(buildScript)).toBe(true);
   
   // Check if the script is executable
-  const { mode } = require('fs').statSync(buildScript);
-  const isExecutable = !!(mode & 0o111); // Check if any execute bit is set
+  const stats = statSync(buildScript);
+  const isExecutable = !!(stats.mode & 0o111); // Check if any execute bit is set
+  console.log(`- Build script permissions: ${stats.mode.toString(8)} (octal)`);
+  console.log(`- Is executable: ${isExecutable}`);
   expect(isExecutable).toBe(true);
 });
 
@@ -89,10 +99,18 @@ testIfDocker('2. Verify Docker is installed and running', () => {
   expect(isDockerRunning).toBe(true);
 });
 
-testIfDocker('3. Verify docker-compose is installed', () => {
-  const result = runCommand('docker-compose --version');
-  expect(result.success).toBe(true);
-  expect(result.output).toContain('docker-compose');
+testIfDocker('3. Verify docker compose is installed', () => {
+  // Check for the newer 'docker compose' command first
+  const result = runCommand('docker compose version', true);
+  
+  // If that fails, fall back to checking for the older 'docker-compose' command
+  if (!result.success) {
+    const legacyResult = runCommand('docker-compose --version');
+    expect(legacyResult.success).toBe(true);
+    expect(legacyResult.output).toContain('docker-compose');
+  } else {
+    expect(result.output).toContain('Docker Compose version');
+  }
 });
 
 testIfDocker('4. Verify minimal build script completes', async () => {
@@ -104,18 +122,27 @@ testIfDocker('4. Verify minimal build script completes', async () => {
   expect(result.output).toContain('Minimal build complete');
   
   // Verify Docker image was built
-  const imageCheck = runCommand(`docker images -q ${DOCKER_IMAGE_NAME}-minimal`);
+  const imageCheck = runCommand(`docker images -q ${DOCKER_IMAGE_NAME}:minimal`);
   expect(imageCheck.success).toBe(true);
   expect(imageCheck.output).not.toBe('');
+  console.log(`- Image ID: ${imageCheck.output}`);
   
   console.log('✓ Minimal build completed successfully');
 }, 300000); // 5 minute timeout
 
 testIfDocker('5. Verify container starts with docker-compose', async () => {
-  // Start the container
-  console.log('Starting container with docker-compose...');
-  const startResult = runCommand('docker-compose up -d');
+  // Try the newer 'docker compose' command first, fall back to 'docker-compose' if it fails
+  console.log('Starting container with docker compose...');
+  let startResult = runCommand(`docker compose -f ${DOCKER_COMPOSE_FILE} up -d`, true);
+  
+  // If the new command fails, try the legacy command
+  if (!startResult.success) {
+    console.log('New docker compose command failed, trying legacy docker-compose...');
+    startResult = runCommand(`docker-compose -f ${DOCKER_COMPOSE_FILE} up -d`);
+  }
+  
   expect(startResult.success).toBe(true);
+  console.log('- Docker Compose output:', startResult.output);
   
   // Give it some time to start
   await new Promise(resolve => setTimeout(resolve, 10000));
